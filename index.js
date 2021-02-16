@@ -3,6 +3,9 @@ const app = express();
 const bodyParser = require('body-parser');
 const cnn = require('./database/context');
 
+const categoriesController = require('./controllers/CategoriesController');
+const articlesController = require('./controllers/ArticlesController');
+
 // View engine
 app.set('view engine', 'ejs');
 
@@ -21,6 +24,9 @@ cnn.authenticate()
    .catch((error) => {
         console.log(error);
    });
+
+app.use('/', categoriesController);
+app.use('/', articlesController);
 
 app.get('/', (req, res) => 
 {
