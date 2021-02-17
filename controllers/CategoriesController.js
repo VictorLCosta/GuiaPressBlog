@@ -1,12 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/categories', (req, res) => {
-    res.send('Tua tia na minha vara');
-});
-
-router.get('/categories/findall', (req, res) => {
-
+router.get('/admin/categories/register', (req, res) => 
+{
+    res.render('admin/categories/register')
 });
 
 module.exports = router;
