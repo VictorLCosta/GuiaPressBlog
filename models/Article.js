@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const cnn = require('../database/context');
+const Category = require('./Category')
 
 const Article = cnn.define('articles', {
     title:{
@@ -15,5 +16,8 @@ const Article = cnn.define('articles', {
         allowNull: false
     }
 });
+
+Category.hasMany(Article);
+Article.belongsTo(Category);
 
 module.exports = Article;

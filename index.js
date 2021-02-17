@@ -6,6 +6,9 @@ const cnn = require('./database/context');
 const categoriesController = require('./controllers/CategoriesController');
 const articlesController = require('./controllers/ArticlesController');
 
+const Article = require('./models/Article');
+const Category = require('./models/Category');
+
 // View engine
 app.set('view engine', 'ejs');
 
