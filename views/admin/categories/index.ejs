@@ -1,10 +1,11 @@
 <%- include('../../partials/header.ejs') %>
 <body>
     <%- include('../../partials/navbar.ejs') %>
-    <br />
-    <h2>Categories</h2>
-    <hr />
-    <div class="container">
+    <div class="container-fluid">
+        <br />
+        <h2>Categories</h2>
+        <a class="btn btn btn-outline-success" href="/admin/categories/register">Criar nova categoria</a>
+        <hr />
         <div class="table-responsive">
             <table class="table">
                 <thead class="thead-dark">
@@ -21,6 +22,13 @@
                             <td><%= category.id %></td>
                             <td><%= category.title %></td>
                             <td><%= category.slug %></td>
+                            <td>
+                                <button class="btn btn-warning">Editar</button>
+                                <form method="POST" action="/admin/categories/delete" style="display: inline;">
+                                    <input type="hidden" name="id" value="<%= category.id %>"/>
+                                    <button class="btn btn-danger">Excluir</button>
+                                </form>
+                            </td>
                         </tr>
                     <% }) %>
                 </tbody>
