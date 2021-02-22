@@ -22,7 +22,7 @@ router.post('/categories/save', (req, res) =>
     }
     else
     {
-        res.redirect('/admin/categories/register');
+        res.redirect('admin/categories/register');
     }
 });
 
