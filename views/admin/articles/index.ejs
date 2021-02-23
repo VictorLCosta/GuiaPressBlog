@@ -1,0 +1,42 @@
+<%- include('../../partials/header.ejs') %>
+<body>
+    <%- include('../../partials/navbar.ejs') %>
+    <div class="container-fluid">
+        <br />
+        <h2>Categories</h2>
+        <a class="btn btn btn-outline-success" href="/admin/articles/new">Novo artigo</a>
+        <hr />
+        <div class="table-responsive">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                    <th>Id</th>
+                    <th>Título</th>
+                    <th>Slug</th>
+                    <th>Categoria</th>
+                    <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% articles.forEach(article => { %>
+                        <tr>
+                            <td> <%= article.id %> </td>
+                            <td> <%= article.title %> </td>
+                            <td> <%= article.slug %> </td>
+                            <td> <%= article.category.title %> </td>
+                            <td> 
+                                <a class="btn btn-primary" href="/admin/articles/get/<%= article.id %>">Visualizar</a>
+                                <a class="btn btn-warning" href="/admin/articles/update/<%= article.id %>">Editar</a>
+                                <form style="display: inline;" method="POST" action="/admin/articles/delete">
+                                    <input type="hidden" value="<%= article.id %>" name="id"/>
+                                    <button class="btn btn-danger">Excluir</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+<%- include('../../partials/footer.ejs') %>
