@@ -21,6 +21,50 @@ router.get('/admin/articles/new', (req, res) =>
     });
 });
 
+router.get('/admin/articles/update/:id', (req, res) => 
+{
+    var id = req.params.id;
+    if(id != undefined){
+        Article.findOne({
+            include: [{model: Category}],
+            where: {
+                id: id
+            }
+        }).then(article => {
+            Category.findAll({raw: true}).then(categories => {
+                res.render('admin/articles/update', {
+                    article: article,
+                    category: article.category,
+                    categories: categories
+                });
+            });
+        });
+    }else{
+        res.status(400);
+        res.send('Bad request');
+    }
+});
+
+router.post('/admin/articles/edit', (req, res) => 
+{
+    var id = req.body.id;
+    var body = req.body.body;
+    var title = req.body.title;
+    var categoryId = req.body.category;
+
+    Article.update({
+        title: title,
+        categoryId: categoryId,
+        body: body
+    }, {
+        where: {
+            id: id
+        }
+    }).then(() => {
+        res.redirect('/admin/articles');
+    });
+});
+
 router.post('/admin/articles/save', (req, res) => 
 {
     var title = req.body.title;
