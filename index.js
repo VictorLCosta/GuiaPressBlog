@@ -33,9 +33,16 @@ app.use('/', articlesController);
 
 app.get('/', (req, res) => 
 {
-    Article.findAll({include: [{model: Category, required: true}]}).then(articles => {
-        res.render('index', {
-            articles: articles
+    Article.findAll({
+        order: [
+            ['id', 'DESC']
+        ]
+    }).then(articles => {
+        Category.findAll().then(categories => {
+            res.render('index', {
+                articles: articles,
+                categories: categories
+            });
         });
     });
 });
@@ -50,7 +57,7 @@ app.get('/:slug', (req, res) =>
         }
     }).then(article => {
         if(article != undefined){
-            res.render('articles', {
+            res.render('article', {
                 article: article
             });
         }
@@ -59,6 +66,27 @@ app.get('/:slug', (req, res) =>
         }
     }).catch(err => {
         res.redirect('/')
+    });
+});
+
+app.get('/categories/:slug', (req, res) => 
+{
+    var slug = req.params.slug;
+
+    Category.findOne({
+        include: [{model: Article}],
+        where: {
+            slug: slug
+        }
+    }).then(category => {
+        Category.findAll().then(categories => {
+            res.render('index', {
+                categories: categories,
+                articles: category.articles
+            })
+        });
+    }).catch(err => {
+        res.redirect('');
     });
 });
 
