@@ -33,7 +33,7 @@ router.post('/admin/articles/save', (req, res) =>
         slug: slugify(title),
         categoryId: category
     }).then(() => {
-        res.redirect('admin/articles');
+        res.redirect('/admin/articles');
     });
 });
 
