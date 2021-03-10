@@ -86,7 +86,7 @@ app.get('/categories/:slug', (req, res) =>
             })
         });
     }).catch(err => {
-        res.redirect('');
+        res.redirect('/');
     });
 });
 
