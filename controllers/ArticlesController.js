@@ -123,7 +123,7 @@ router.get('/articles/page/:num', (req, res) =>
         offset: offset
     }).then(articles => {
         var next;
-        if(offset * 4 > articles.count)
+        if(offset + 4 >= articles.count)
         {
             next = false;
         }
@@ -136,8 +136,13 @@ router.get('/articles/page/:num', (req, res) =>
             next: next,
             articles: articles
         }
-
-        res.json(result)
+        
+        Category.findAll().then(categories => {
+            res.render('admin/articles/page', {
+                result: result,
+                categories: categories
+            });
+        });
     });
 });
 
