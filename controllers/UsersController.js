@@ -12,4 +12,13 @@ router.get('/admin/users/create', (req, res) =>
     res.render('admin/users/create');
 });
 
+router.post('/admin/users/save', (req, res) => 
+{
+    var email = req.body.email;
+    var userName = req.body.userName;
+    var password = req.body.password;
+
+    
+});
+
 module.exports = router;
