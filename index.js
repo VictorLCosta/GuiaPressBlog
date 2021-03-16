@@ -5,9 +5,11 @@ const cnn = require('./database/context');
 
 const categoriesController = require('./controllers/CategoriesController');
 const articlesController = require('./controllers/ArticlesController');
+const usersController = require('./controllers/UsersController');
 
 const Article = require('./models/Article');
 const Category = require('./models/Category');
+const User = require('./models/User');
 
 // View engine
 app.set('view engine', 'ejs');
@@ -30,6 +32,7 @@ cnn.authenticate()
 
 app.use('/', categoriesController);
 app.use('/', articlesController);
+app.use('/', usersController);
 
 app.get('/', (req, res) => 
 {
