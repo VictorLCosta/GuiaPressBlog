@@ -115,7 +115,7 @@ router.get('/articles/page/:num', (req, res) =>
     }
     else
     {
-        offset = parseInt(page) * 4;
+        offset = (parseInt(page) - 1) * 4;
     }
 
     Article.findAndCountAll({
@@ -134,13 +134,14 @@ router.get('/articles/page/:num', (req, res) =>
 
         var result = {
             next: next,
-            articles: articles
+            articles: articles,
+            page: parseInt(page)
         }
         
         Category.findAll().then(categories => {
             res.render('admin/articles/page', {
                 result: result,
-                categories: categories
+                categories: categories,
             });
         });
     });
