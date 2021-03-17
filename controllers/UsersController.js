@@ -5,7 +5,9 @@ const bcrypt = require('bcrypt')
 
 router.get('/admin/users', (req, res) => 
 {
-    res.send('<h1>O usuário é gay</h1>');
+    User.findAll().then(users => {
+        res.render('');
+    });
 });
 
 router.get('/admin/users/create', (req, res) => 
@@ -19,17 +21,26 @@ router.post('/admin/users/save', (req, res) =>
     var userName = req.body.userName;
     var password = req.body.password;
 
-    var salt = bcrypt.genSaltSync(10);
-    var hash = bcrypt.hashSync(password, salt);
+    User.findOne({where: {email: email}}).then(user => {
+        if(user == undefined)
+        {
+            var salt = bcrypt.genSaltSync(10);
+            var hash = bcrypt.hashSync(password, salt);
 
-    User.create({
-        email: email,
-        userName: userName,
-        password: hash
-    }).then(() => {
-        res.redirect('/');
-    }).catch((err) => {
-        res.redirect('/admin/users/create');
+            User.create({
+                email: email,
+                userName: userName,
+                password: hash
+            }).then(() => {
+                res.redirect('/');
+            }).catch((err) => {
+                res.redirect('/admin/users/create');
+            });
+        }
+        else
+        {
+            res.redirect('/admin/users/create');
+        }
     });
 });
 
