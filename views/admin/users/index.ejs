@@ -1,0 +1,40 @@
+<%- include('../../partials/header.ejs') %>
+<body>
+    <%- include('../../partials/navbar.ejs') %>
+    <div class="container-fluid">
+        <br />
+        <h2>Usuários</h2>
+        <a class="btn btn btn-outline-success" href="/admin/categories/create">Criar novo usuário</a>
+        <hr />
+        <div class="table-responsive">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                    <th>Id</th>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% users.forEach(user => { %>
+                        <tr>
+                            <td><%= user.id %></td>
+                            <td><%= user.userName %></td>
+                            <td><%= user.email %></td>
+                            <td>
+                                <a href="/admin/categories/edit/<%= user.id %>" class="btn btn-warning" role="button">Editar</a>
+
+                                <form method="POST" action="/admin/categories/delete" style="display: inline;">
+                                    <input type="hidden" name="id" value="<%= user.id %>"/>
+                                    <button class="btn btn-danger">Excluir</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+<%- include('../../partials/footer.ejs') %> 

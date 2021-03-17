@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const session = require('express-session');
 const cnn = require('./database/context');
 
 const categoriesController = require('./controllers/CategoriesController');
@@ -13,6 +14,16 @@ const User = require('./models/User');
 
 // View engine
 app.set('view engine', 'ejs');
+
+// Sessions 
+app.use(session({
+    secret: 'ZWRpw6fDo28gZW0gY2/9tcHV0YWRvcmE=',
+    cookie: {
+        maxAge: 3500000,
+    },
+    saveUninitialized: true,
+    resave: true
+}));
 
 // Static
 app.use(express.static('wwwroot'))
@@ -33,6 +44,23 @@ cnn.authenticate()
 app.use('/', categoriesController);
 app.use('/', articlesController);
 app.use('/', usersController);
+
+app.get('/session', (req, res) => 
+{
+    req.session.user = {
+        id: 10,
+        userName: "victor",
+        email: "victorlc2019@outlook.com"
+    };
+    res.send("Sessão gerada")
+});
+
+app.get('/session/read', (req, res) => 
+{
+    res.json({
+        user: req.session.user
+    });
+});
 
 app.get('/', (req, res) => 
 {
