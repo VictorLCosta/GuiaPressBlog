@@ -3,8 +3,9 @@ const router = express.Router();
 const Category = require('../models/Category');
 const Article = require('../models/Article');
 const slugify = require('slugify');
+const adminAuth = require('../middlewares/adminAuth');
 
-router.get('/admin/articles', (req, res) => {
+router.get('/admin/articles', adminAuth, (req, res) => {
     Article.findAll({include: [{model: Category, required: true}]}).then(articles => {
         res.render('admin/articles', {
             articles: articles
@@ -12,7 +13,7 @@ router.get('/admin/articles', (req, res) => {
     });
 });
 
-router.get('/admin/articles/new', (req, res) =>
+router.get('/admin/articles/new', adminAuth, (req, res) =>
 {
     Category.findAll({raw: true}).then(categories => {
         res.render('admin/articles/register', {
@@ -21,7 +22,7 @@ router.get('/admin/articles/new', (req, res) =>
     });
 });
 
-router.get('/admin/articles/update/:id', (req, res) => 
+router.get('/admin/articles/update/:id', adminAuth, (req, res) => 
 {
     var id = req.params.id;
     if(id != undefined){
@@ -45,7 +46,7 @@ router.get('/admin/articles/update/:id', (req, res) =>
     }
 });
 
-router.post('/admin/articles/edit', (req, res) => 
+router.post('/admin/articles/edit', adminAuth, (req, res) => 
 {
     var id = req.body.id;
     var body = req.body.body;
@@ -65,7 +66,7 @@ router.post('/admin/articles/edit', (req, res) =>
     });
 });
 
-router.post('/admin/articles/save', (req, res) => 
+router.post('/admin/articles/save', adminAuth, (req, res) => 
 {
     var title = req.body.title;
     var body = req.body.body;
@@ -81,7 +82,7 @@ router.post('/admin/articles/save', (req, res) =>
     });
 });
 
-router.post('/admin/articles/delete', (req, res) => 
+router.post('/admin/articles/delete', adminAuth, (req, res) => 
 {
     var id = req.body.id;
 
@@ -104,7 +105,7 @@ router.post('/admin/articles/delete', (req, res) =>
     }
 });
 
-router.get('/articles/page/:num', (req, res) => 
+router.get('/articles/page/:num', adminAuth, (req, res) => 
 {
     var page = req.params.num;
     var offset = 0;
